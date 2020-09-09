@@ -1,0 +1,29 @@
+---
+- hosts: all
+  gather_facts: yes
+  become: yes
+
+  vars_files:
+    - vars/main.yml
+
+  tasks:
+    # Install Python.
+    - name: Install python and dependencies.
+      apt: 
+      name: ['python3', 'python3-pip']
+      
+
+    # - command: which docker
+    #   register: docker_result
+    #   changed_when: false
+    #   failed_when: false
+
+    # - name: Install Docker.
+    #   shell: gem install rails --no-ri --no-rdoc
+    #   when: docker_result.rc != 0
+
+    # - name: Bundle Install Gems
+    #   shell: cd /vagrant/simpleapi; bundle install
+
+    # - name: Start rails application.
+    #   shell: "cd /vagrant/simpleapi; rails s -b 0.0.0.0 &"
