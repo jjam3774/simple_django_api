@@ -55,7 +55,7 @@ def book_detail(request, pk):
 
 
 @api_view(['GET', 'POST'])
-def startpage(request):
+def start_page(request):
 
     if request.method == 'GET':        
         books = Book.objects.all()

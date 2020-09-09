@@ -6,5 +6,5 @@ from django.urls import path, include
 urlpatterns = [
     path('books/<endpoint>', views.book_list),
     path('books/', views.book_list),
-    path('', views.startpage, name='Start Page'),
+    path('', views.start_page, name='Start Page'),
 ]
