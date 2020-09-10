@@ -15,7 +15,7 @@ RUN apk del .tmp-build-deps
 
 RUN mkdir /app
 WORKDIR /app
-COPY ./ /app
+COPY ./bookapi /app
 COPY ./scripts /scripts
 RUN chmod +x /scripts/*
 
