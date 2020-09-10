@@ -12,10 +12,11 @@ from books.serializers import BookSerializer
 
 # Decorater that declares the type of requests that the method will handle
 @api_view(['GET', 'POST'])
-def book_list(request, endpoint='mark'):
+def book_list(request, endpoint='python'):
     if request.method == 'GET':
-        url = 'https://learning.oreilly.com/api/v2/search/?query=author:\"{}\"'.format(
-            endpoint)
+        url = 'https://learning.oreilly.com/api/v2/search/?query="{}"'.format(endpoint)
+        #url = 'https://learning.oreilly.com/api/v2/search/?query=author:\"{}\"'.format(endpoint)
+
         res = requests.get(url)
         output = json.loads(res.text)
         # print(json.dumps(output, indent=4, sort_keys=True))
