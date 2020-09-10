@@ -2,7 +2,6 @@ FROM python:3.7-alpine
 LABEL maintainer="Jeffrey James"
 
 ENV PYTHONUNBUFFERED 1
-ENV PATH="/scripts:${PATH}"
 
 RUN pip install --upgrade pip
 
@@ -26,4 +25,4 @@ RUN chown -R user:user /vol/
 RUN chmod -R 755 /vol/web
 USER user
 
-CMD ["entrypoint.sh"]
+CMD ["scripts/entrypoint.sh"]
