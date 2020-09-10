@@ -1,4 +1,4 @@
-FROM python:3.7-alpine
+FROM FROM python:3.7-buster
 LABEL maintainer="Jeffrey James"
 
 # install nginx
