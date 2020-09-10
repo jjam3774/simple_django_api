@@ -12,6 +12,7 @@ RUN mkdir -p /opt/app
 RUN mkdir -p /opt/app/pip_cache
 RUN mkdir -p /opt/app/bookapi
 COPY requirements.txt entrypoint.sh /opt/app/
+RUN chmod 755 /opt/app/entrypoint.sh
 #COPY .pip_cache /opt/app/pip_cache/
 COPY ./ /opt/app/bookapi/
 WORKDIR /opt/app
@@ -22,4 +23,4 @@ RUN chown -R www-data:www-data /opt/app
 EXPOSE 8000
 STOPSIGNAL SIGTERM
 
-CMD ["/opt/app/entrypoint.sh"]
+ENTRYPOINT ["/opt/app/entrypoint.sh"]
