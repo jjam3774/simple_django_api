@@ -2,7 +2,7 @@ asgiref
 autopep8
 certifi
 chardet
-Django
+django
 djangorestframework
 pycodestyle
 pytz
