@@ -20,11 +20,10 @@ Vagrant.configure(2) do |config|
   # Ansible provisioner.
   config.vm.provision "ansible_local" do |ansible|
     ansible.compatibility_mode = "2.0"
-    ansible.playbook = "provisioning/"
+    ansible.playbook = "provisioning/playbook.yml"
     ansible.become = true
   end
-
-  #config.vm.hostname = "rails"
+  
   config.vm.define "servicea" do |service_a|
     service_a.vm.network :forwarded_port, guest: 8000, host: 8000, auto_correct: true
     service_a.vm.hostname = "ServiceA"

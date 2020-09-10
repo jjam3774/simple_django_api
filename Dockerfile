@@ -1,28 +1,25 @@
 FROM python:3.7-alpine
 LABEL maintainer="Jeffrey James"
 
-ENV PYTHONUNBUFFERED 1
+# install nginx
+RUN apt-get update && apt-get install nginx vim -y --no-install-recommends
+COPY nginx.default /etc/nginx/sites-available/default
+RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+    && ln -sf /dev/stderr /var/log/nginx/error.log
 
-RUN pip install --upgrade pip
+# copy source and install dependencies
+RUN mkdir -p /opt/app
+RUN mkdir -p /opt/app/pip_cache
+RUN mkdir -p /opt/app/bookapi
+COPY requirements.txt entrypoint.sh /opt/app/
+COPY .pip_cache /opt/app/pip_cache/
+COPY ./ /opt/app/bookapi/
+WORKDIR /opt/app
+RUN pip install -r requirements.txt --cache-dir /opt/app/pip_cache
+RUN chown -R www-data:www-data /opt/app
 
-COPY ./requirements.txt /requirements.txt
-RUN apk add --update --no-cache postgresql-client jpeg-dev
-RUN apk add --update --no-cache --virtual .tmp-build-deps \
-    gcc libc-dev linux-headers postgresql-dev musl-dev zlib zlib-dev
-RUN pip install --no-cache-dir -r /requirements.txt
-RUN apk del .tmp-build-deps
+# start server
+EXPOSE 8000
+STOPSIGNAL SIGTERM
 
-RUN mkdir /app
-WORKDIR /app
-COPY ./ /app
-COPY ./scripts /scripts
-RUN chmod +x /scripts/*
-
-RUN mkdir -p /vol/web/media
-RUN mkdir -p /vol/web/static
-RUN adduser -D user
-RUN chown -R user:user /vol/
-RUN chmod -R 755 /vol/web
-USER user
-
-CMD ["scripts/entrypoint.sh"]
+CMD ["/opt/app/entrypoint.sh"]
